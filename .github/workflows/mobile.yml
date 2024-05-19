@@ -98,7 +98,30 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: 4.3.4name: CI - Test GlassesUSA on iOS 17.2
+
+on: [pull_request]
+
+jobs:
+  run_tests:
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v4
+    - name: Restart Simulator
+      run: xcrun simctl shutdown booted
+    - name: Select Xcode
+      run:
+       cd GlassesUSA &&
+       sudo xcode-select -switch /Applications/Xcode_15.2.app && /usr/bin/xcodebuild -version
+    - name: Install Dependencies
+      run:
+        cd GlassesUSA &&
+        pod install --repo-update
+      shell: bash
+    - name: Run tests
+      run:
+       cd GlassesUSA &&
+       xcodebuild test -scheme GlassesUSA -workspace GlassesUSA.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2' | xcpretty && exit ${PIPESTATUS[0]}
       - name: Install Libraries
         run: |
           haxelib setup ~/haxelib
