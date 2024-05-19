@@ -8,6 +8,7 @@
 	<app file="YoshiCrafterEngine_Linux" if="linux" />
 	<app file="YoshiCrafterEngine_Mac" if="mac" />
 	<app file="YoshiCrafterEngine_Android" if="android" />
+	<app file="YoshiCrafterEngine_Ios" if="ios" />
 	<!-- <app file="Yoshi Engine (x64)" unless="32bit" /> -->
 	<haxedef name="X64_BITS" unless="32bit"/>
 
