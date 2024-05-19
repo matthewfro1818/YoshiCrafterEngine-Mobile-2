@@ -145,7 +145,7 @@ jobs:
       - name: Make Zip For Release
         run: |
            cd export/release/ios/build/Release-iphoneos
-           zip CodenameEngine-iOS.zip CodenameEngine.ipa
+           zip YoshiCrafterEngine-iOS.zip YoshiCrafterEngine.ipa
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
