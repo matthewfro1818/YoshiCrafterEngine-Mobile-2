@@ -2,8 +2,10 @@
   "dependencies": [
     {
       "name": "lime",
-      "type": "haxelib",
-      "version": "6.2.0"
+      "type": "git",
+      "dir": null,
+      "ref": "develop",
+      "url": "https://github.com/mcagabe19-stuff/lime"
     },
     {
       "name": "hscript-improved",
@@ -15,7 +17,7 @@
     {
       "name": "openfl",
       "type": "haxelib",
-      "version": "7.1.2"
+      "version": "9.2.2"
     },
     {
       "name": "away3d",
