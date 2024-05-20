@@ -129,6 +129,13 @@
       "url": "https://github.com/Yoshman29-FunkinArchive/flixel"
     },
     {
+      "name": "discord_rpc_yce",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/ThatOneIdiotXav/discord_rpc_yce"
+    },
+    {
       "name": "spinehaxe",
       "type": "git",
       "dir": null,
