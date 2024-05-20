@@ -42,6 +42,11 @@
       "version": null
     },
     {
+      "name": "hxp",
+      "type": "haxelib",
+      "version": null
+    },
+    {
       "name": "flixel",
       "type": "git",
       "dir": null,
