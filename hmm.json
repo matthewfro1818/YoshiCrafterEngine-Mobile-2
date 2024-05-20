@@ -134,6 +134,11 @@
       "dir": null,
       "ref": "master",
       "url": "https://github.com/bendmorris/spinehaxe"
+    },
+    {
+      "name": "lime",
+      "type": "haxelib",
+      "version": null
     }
   ]
 }
