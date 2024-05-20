@@ -3,7 +3,7 @@
 	<!-- _________________________ Application Settings _________________________ -->
 	<app
 		title="Friday Night Funkin' - YoshiCrafter Engine" main="Main"
-		file="CodenameEngine" packageName="com.yoshman29.yoshiengine"
+		file="YoshiCrafterEngine" packageName="com.yoshman29.yoshiengine"
 		package="com.yoshman29.yoshiengine"
 		version="0.1.0" company="Yoshman29" />
 	<!--
