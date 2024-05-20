@@ -95,6 +95,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        with:
+           IPHONEOS_DEPLOYMENT_TARGET: 12.0
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
@@ -143,11 +145,11 @@ jobs:
           cd export/release/ios/build/Release-iphoneos
           mkdir Payload
           mv *.app Payload
-          zip -r YoshiCrafterEngine_Ios.ipa Payload
+          zip -r YoshiCrafterEngine.ipa Payload
       - name: Make Zip For Release
         run: |
            cd export/release/ios/build/Release-iphoneos
-           zip YoshiCrafterEngine_Ios.zip YoshiCrafterEngine_Ios.ipa
+           zip YoshiCrafterEngine-Ios.zip YoshiCrafterEngine.ipa
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
@@ -166,7 +168,7 @@ jobs:
            name: androidBuild
            path: /home/runner
       - name: Move Android File
-        run: mv /home/runner/YoshiCrafterEngine_Android-release.apk /home/runner/YoshiCrafterEngine_Android.apk
+        run: mv /home/runner/YoshiCrafterEngine_Android-release.apk /home/runner/YoshiCrafterEngine.apk
       - name: Download iOS Build
         uses: actions/download-artifact@main
         with:
