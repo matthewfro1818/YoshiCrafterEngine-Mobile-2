@@ -64,7 +64,7 @@ jobs:
           haxelib setup ~/haxelib
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib run lime setup macos
+          haxelib run lime setup mac
           haxelib run lime setup ios
       - name: Compile
         run: haxelib run lime build ios -final
