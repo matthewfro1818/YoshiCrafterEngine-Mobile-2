@@ -5,7 +5,7 @@
       "type": "git",
       "dir": null,
       "ref": "develop",
-      "url": "https://github.com/openfl/lime"
+      "url": "https://github.com/matthewfro1818/lime"
     },
     {
       "name": "hscript-improved",
@@ -147,7 +147,7 @@
       "type": "git",
       "dir": null,
       "ref": "develop",
-      "url": "https://github.com/openfl/lime"
+      "url": "https://github.com/matthewfro1818/lime"
     }
   ]
 }
