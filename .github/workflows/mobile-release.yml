@@ -1,42 +1,29 @@
 name: Mobile + Release
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
+on: workflow_dispatch
 jobs:
   Android:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        storage-type: [EXTERNAL, MEDIA, OBB, DATA]
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@main
-
       - name: Setup Android NDK
         uses: nttld/setup-ndk@main
         id: setup-ndk
         with:
           ndk-version: r21e
-
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
           distribution: 'temurin'
           java-version: '11'
-
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
-
       - name: Install Libraries
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib remove lime
-          haxelib install lime 6.2.0
-
       - name: Configure Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
@@ -45,9 +32,8 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-
       - name: Compile
-        run: haxelib run lime build android -D officialBuild -D ${{ matrix.storage-type }} -final
+        run: haxelib run lime build android -final
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
@@ -56,7 +42,7 @@ jobs:
         if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
-          name: androidBuild-${{ matrix.storage-type }}
+          name: androidBuild
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
   iOS:
@@ -64,35 +50,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
-
       - name: Install Libraries
         run: |
           haxelib setup ~/haxelib
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib remove lime
-          haxelib install lime 6.2.0
-
       - name: Compile
-        run: haxelib run lime build ios -D NOVIDEO -D officialBuild -final
-
+        run: haxelib run lime build ios -final
       - name: Make Ipa
         run: |
           cd export/release/ios/build/Release-iphoneos
           mkdir Payload
           mv *.app Payload
-          zip -r YoshiCrafterEngine.ipa Payload
-
+          zip -r CodenameEngine.ipa Payload
       - name: Make Zip For Release
         run: |
            cd export/release/ios/build/Release-iphoneos
-           zip YoshiCrafterEngine-iOS.zip YoshiCrafterEngine.ipa
-
+           zip CodenameEngine-iOS.zip CodenameEngine.ipa
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
@@ -105,55 +83,25 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Download OBB Build
+      - name: Download Android Build
         uses: actions/download-artifact@main
         with:
-           name: androidBuild-OBB
+           name: androidBuild
            path: /home/runner
-
-      - name: Move OBB File
-        run: mv /home/runner/YoshiCrafterEngine-release.apk /home/runner/YoshiCrafterEngine-OBB.apk
-
-      - name: Download DATA Build
-        uses: actions/download-artifact@main
-        with:
-           name: androidBuild-DATA
-           path: /home/runner
-
-      - name: Move DATA File
-        run: mv /home/runner/YoshiCrafterEngine-release.apk /home/runner/YoshiCrafterEngine-DATA.apk
-
-      - name: Download EXTENAL Build
-        uses: actions/download-artifact@main
-        with:
-           name: androidBuild-EXTERNAL
-           path: /home/runner
-
-      - name: Move EXTERNAL File
-        run: mv /home/runner/YoshiCrafterEngine-release.apk /home/runner/YoshiCrafterEngine-EXTERNAL.apk
-
-      - name: Download MEDIA Build
-        uses: actions/download-artifact@main
-        with:
-           name: androidBuild-MEDIA
-           path: /home/runner
-
-      - name: Move MEDIA File
-        run: mv /home/runner/YoshiCrafterEngine-release.apk /home/runner/YoshiCrafterEngine-MEDIA.apk
-
+      - name: Move Android File
+        run: mv /home/runner/CodenameEngine-release.apk /home/runner/CodenameEngine-Android.apk
       - name: Download iOS Build
         uses: actions/download-artifact@main
         with:
            name: iOSBuild
            path: /home/runner
-
       - name: Publish The Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
-          automatic_release_tag: ""
-          title: ""
+          automatic_release_tag: "dev-8c4d9bf"
+          title: "DevBuild 8c4d9bf"
           files: |
             /home/runner/*.apk
             /home/runner/*.zip
