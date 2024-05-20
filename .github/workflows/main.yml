@@ -18,7 +18,7 @@ jobs:
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib run lime setup windows
+          haxelib setup lime windows
       - name: Compile
         run: haxelib run lime build windows
       - name: Upload Artifact
@@ -42,7 +42,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive sudo apt-get -qq install -o Dpkg::Progress-Fancy="0" -o APT::Color="0" -o Dpkg::Use-Pty="0" libvlc-dev libvlccore-dev < /dev/null > /dev/null
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib run lime setup linux
+          haxelib setup lime linux
       - name: Compile
         run: haxelib run lime build linux
       - name: Upload Artifact
@@ -68,7 +68,7 @@ jobs:
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib run lime setup mac
+          haxelib setup lime mac
       - name: Compile
         run: haxelib run lime build mac
       - name: Upload Artifact
@@ -101,7 +101,7 @@ jobs:
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib run lime setup android
+          haxelib setup lime android
       - name: Configure Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
@@ -134,7 +134,8 @@ jobs:
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib run setup ios
+          haxelib setup lime mac
+          haxelib setup lime ios
       - name: Compile
         run: haxelib run lime build ios
       - name: Make Ipa
