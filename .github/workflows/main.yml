@@ -19,6 +19,7 @@ jobs:
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
           haxelib setup lime windows
+          haxelib install lime 7.7.0
       - name: Compile
         run: haxelib run lime build windows
       - name: Upload Artifact
@@ -43,6 +44,7 @@ jobs:
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
           haxelib setup lime linux
+          haxelib install lime 7.7.0
       - name: Compile
         run: haxelib run lime build linux
       - name: Upload Artifact
@@ -69,6 +71,7 @@ jobs:
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
           haxelib setup lime mac
+          haxelib install lime 7.7.0
       - name: Compile
         run: haxelib run lime build mac
       - name: Upload Artifact
@@ -102,6 +105,7 @@ jobs:
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
           haxelib setup lime android
+          haxelib install lime 7.7.0
       - name: Configure Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
@@ -136,6 +140,7 @@ jobs:
           haxelib run hmm install --quiet
           haxelib setup lime mac
           haxelib setup lime ios
+          haxelib install lime 7.7.0
       - name: Compile
         run: haxelib run lime build ios
       - name: Make Ipa
