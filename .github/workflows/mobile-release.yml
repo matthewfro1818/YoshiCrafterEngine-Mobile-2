@@ -66,11 +66,11 @@ jobs:
           cd export/release/ios/build/Release-iphoneos
           mkdir Payload
           mv *.app Payload
-          zip -r CodenameEngine.ipa Payload
+          zip -r YoshiCrafterEngine.ipa Payload
       - name: Make Zip For Release
         run: |
            cd export/release/ios/build/Release-iphoneos
-           zip CodenameEngine-iOS.zip CodenameEngine.ipa
+           zip YoshiCrafterEngine-iOS.zip YoshiCrafterEngine.ipa
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
@@ -89,7 +89,7 @@ jobs:
            name: androidBuild
            path: /home/runner
       - name: Move Android File
-        run: mv /home/runner/CodenameEngine-release.apk /home/runner/CodenameEngine-Android.apk
+        run: mv /home/runner/YoshiCrafterEngine-release.apk /home/runner/YoshiCrafterEngine-Android.apk
       - name: Download iOS Build
         uses: actions/download-artifact@main
         with:
