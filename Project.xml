@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-
 	<!-- _________________________ Application Settings _________________________ -->
-
-	<app title="Friday Night Funkin' - YoshiCrafter Engine" packageName="com.yoshicrafter29.yoshiengine" package="com.yoshicrafter29.yoshiengine" main="Main" version="0.2.7.1" company="YoshiCrafter29" />
-	<app file="YoshiCrafterEngine" if="windows" />
-	<app file="YoshiCrafterEngine_Linux" if="linux" />
-	<app file="YoshiCrafterEngine_Mac" if="mac" />
-	<app file="YoshiCrafterEngine_Android" if="android" />
-	<app file="YoshiCrafterEngine_Ios" if="ios" />
-	<!-- <app file="Yoshi Engine (x64)" unless="32bit" /> -->
-	<haxedef name="X64_BITS" unless="32bit"/>
+	<app
+		title="Friday Night Funkin' - YoshiCrafter Engine" main="Main"
+		file="CodenameEngine" packageName="com.yoshman29.yoshiengine"
+		package="com.yoshman29.yoshiengine"
+		version="0.1.0" company="Yoshman29" />
+	<!--
+		CHANGE THE SAVE PATH & NAME FOR YOUR MOD HERE!
+	-->
+	<app save-path="YoshiCrafter29/YoshiCrafterEngine" save-name="save-default" mod-saves="true" />
 
 	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
 	<haxedef name="HXCPP_STACK_LINE" if="release" />
