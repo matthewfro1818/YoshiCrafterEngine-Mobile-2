@@ -3,13 +3,13 @@
 	<!-- _________________________ Application Settings _________________________ -->
 	<app
 		title="Friday Night Funkin' - YoshiCrafter Engine" main="Main"
-		file="YoshiCrafterEngine" packageName="com.yoshman29.yoshiengine"
-		package="com.yoshman29.yoshiengine"
-		version="0.1.0" company="Yoshman29" />
+		file="YoshiCrafterEngine" packageName="com.matthewfro1818.yoshiengine"
+		package="com.matthewfro1818.yoshiengine"
+		version="0.1.0" company="matthewfro1818" />
 	<!--
 		CHANGE THE SAVE PATH & NAME FOR YOUR MOD HERE!
 	-->
-	<app save-path="YoshiCrafter29/YoshiCrafterEngine" save-name="save-default" mod-saves="true" />
+	<app save-path="matthewfro1818/YoshiCrafterEngine" save-name="save-default" mod-saves="true" />
 
 	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
 	<haxedef name="HXCPP_STACK_LINE" if="release" />
