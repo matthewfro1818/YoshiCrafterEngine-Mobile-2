@@ -11,6 +11,11 @@
       "name":"IPHONE_VER",
       "type":"string",
       "description":"Sets the version of target iOS via passing parameter to 'xcrun --sdk iphoneosX.X'. e.g.: `-D IPHONE_VER 9.1`."
+    },
+    {
+      "name":"IPHONEOS_DEPLOYMENT_TARGET",
+      "type":"string",
+      "description":"Sets the version of target iOS via passing parameter to 'xcrun --sdk iphoneosX.X'. e.g.: `-D IPHONEOS_DEPLOYMENT_TARGET 12.0`."
     }
   ],
 
