@@ -6,7 +6,7 @@ on:
   repository_dispatch:
 jobs:
   Ios:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -20,8 +20,10 @@ jobs:
           haxelib run hmm install --quiet
           haxelib setup lime mac
           haxelib setup lime ios
+      - name: Create Version Tag
+        run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build ios
+        run: haxelib run lime build ios --app-version="4.0.0-${{ github.run_id}}"
       - name: Make Ipa
         run: |
           cd export/release/ios/build/*-iphoneos
