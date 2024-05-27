@@ -4,32 +4,33 @@ on:
   pull_request:
   workflow_dispatch:
   repository_dispatch:
-jobs:
-  Ios:
-    runs-on: macos-latest
+jobs: 
+  iOS:
+    runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
+
       - name: Install Libraries
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-          haxelib setup lime mac
-          haxelib setup lime ios
-      - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
+
       - name: Compile
-        run: haxelib run lime build ios --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build ios
+
       - name: Make Ipa
         run: |
           cd export/release/ios/build/*-iphoneos
           mkdir Payload
           mv *.app Payload
-          zip -r YoshiCrafterEngine.ipa Payload
+          zip -r PsychEngine.ipa Payload
+
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
