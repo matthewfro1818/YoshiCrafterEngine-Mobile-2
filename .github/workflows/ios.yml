@@ -20,13 +20,6 @@ jobs:
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
-
-      - name: Npx Stuff Part 1
-        run: npx expo prebuild
-
-      - name: Npx Stuff Part 2
-        run: npx expo run:ios
-
       - name: Compile
         run: haxelib run lime build ios
 
@@ -36,7 +29,6 @@ jobs:
           mkdir Payload
           mv *.app Payload
           zip -r PsychEngine.ipa Payload
-
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
