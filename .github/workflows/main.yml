@@ -25,7 +25,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-        haxe-version: 4.3.4
+         haxe-version: 4.3.4
 
       - name: Install Libraries
         run: |
@@ -51,7 +51,7 @@ jobs:
      - name: Setup Haxe
        uses: krdlab/setup-haxe@master
        with:
-       haxe-version: 4.3.4
+         haxe-version: 4.3.4
 
      - name: Install Libraries
        run: |
@@ -65,14 +65,10 @@ jobs:
      - name: Upload Artifact
        if: ${{ success() }}
        uses: actions/upload-artifact@main
-       with:
-     - name: linuxBuild
-       path: export/release/linux/bin/*
-       if-no-files-found: error
   macOS:
     runs-on: macos-${{matrix.version}}
     strategy:
-      matrix:
+     matrix:
       version: [11, 12, 13]
     steps:
       - name: Checkout
@@ -108,7 +104,7 @@ jobs:
         uses: nttld/setup-ndk@main
         id: setup-ndk
         with:
-        ndk-version: r21e
+         ndk-version: r21e
 
       - name: Setup Java JDK
         uses: actions/setup-java@main
@@ -154,7 +150,7 @@ jobs:
            # You may pin to the exact commit or the version.
            # uses: Oberhauser-Dev/flutter-release-action@508fbc571960b39d960342ad124751bfccfba2df
            uses: Oberhauser-Dev/flutter-release-action@v0
-           with:
+            with:
            # Authorized secret GitHub Personal Access Token. Defaults to github.token
            token: # optional, default is ${{ github.token }}
            # Specifies the working directory where the command is run.
