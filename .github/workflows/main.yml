@@ -1,0 +1,243 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build
+
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  Windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+     uses: actions/checkout@main
+
+      - name: Setup Haxe
+     uses: krdlab/setup-haxe@master
+     with:
+       haxe-version: 4.3.4
+
+      - name: Install Libraries
+     run: |
+       haxelib install hmm --quiet
+       haxelib run hmm install --quiet
+
+      - name: Compile
+     run: haxelib run lime build windows
+
+      - name: Upload Artifact
+     if: ${{ success() }}
+     uses: actions/upload-artifact@main
+     with:
+       name: windowsBuild
+       path: export\release\windows\bin\*
+       if-no-files-found: error
+  Linux:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+     uses: actions/checkout@main
+
+      - name: Setup Haxe
+     uses: krdlab/setup-haxe@master
+     with:
+       haxe-version: 4.3.4
+
+      - name: Install Libraries
+     run: |
+       DEBIAN_FRONTEND=noninteractive sudo apt-get -qq install -o Dpkg::Progress-Fancy="0" -o APT::Color="0" -o Dpkg::Use-Pty="0" libvlc-dev libvlccore-dev < /dev/null > /dev/null
+       haxelib install hmm --quiet
+       haxelib run hmm install --quiet
+
+      - name: Compile
+     run: haxelib run lime build linux
+
+      - name: Upload Artifact
+     if: ${{ success() }}
+     uses: actions/upload-artifact@main
+     with:
+       name: linuxBuild
+       path: export/release/linux/bin/*
+       if-no-files-found: error
+  macOS:
+    runs-on: macos-${{matrix.version}}
+    strategy:
+      matrix:
+     version: [11, 12, 13]
+    steps:
+      - name: Checkout
+     uses: actions/checkout@main
+
+      - name: Setup Haxe
+     uses: krdlab/setup-haxe@master
+     with:
+       haxe-version: 4.3.4
+
+      - name: Install Libraries
+     run: |
+       haxelib install hmm --quiet
+       haxelib run hmm install --quiet
+
+      - name: Compile
+     run: haxelib run lime build mac
+
+      - name: Upload Artifact
+     if: ${{ success() }}
+     uses: actions/upload-artifact@main
+     with:
+       name: macOSBuild-${{matrix.version}}
+       path: export/release/macos/bin/*
+       if-no-files-found: error
+  Android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+     uses: actions/checkout@main
+
+      - name: Setup Android NDK
+     uses: nttld/setup-ndk@main
+     id: setup-ndk
+     with:
+       ndk-version: r21e
+
+      - name: Setup Java JDK
+     uses: actions/setup-java@main
+     with:
+       distribution: 'temurin'
+       java-version: '11'
+
+      - name: Setup Haxe
+     uses: krdlab/setup-haxe@master
+     with:
+       haxe-version: 4.3.4
+
+      - name: Install Libraries
+     run: |
+       haxelib install hmm --quiet
+       haxelib run hmm install --quiet
+
+      - name: Configure Android
+     run: |
+       haxelib run lime config ANDROID_SDK $ANDROID_HOME
+       haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
+       haxelib run lime config JAVA_HOME $JAVA_HOME
+       haxelib run lime config ANDROID_SETUP true
+     env:
+       ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
+      - name: Compile
+     run: haxelib run lime build android
+
+      - name: Upload Artifact
+     if: ${{ success() }}
+     uses: actions/upload-artifact@main
+     with:
+       name: androidBuild
+       path: export/release/android/bin/app/build/outputs/apk/release/*.apk
+       if-no-files-found: error
+  iOS:
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+     uses: actions/checkout@main
+      - name: Flutter Release Action
+  # You may pin to the exact commit or the version.
+  # uses: Oberhauser-Dev/flutter-release-action@508fbc571960b39d960342ad124751bfccfba2df
+     uses: Oberhauser-Dev/flutter-release-action@v0
+     with:
+    # Authorized secret GitHub Personal Access Token. Defaults to github.token
+     token: # optional, default is ${{ github.token }}
+    # Specifies the working directory where the command is run.
+     working-directory: # optional, default is ./
+     # Whether the process should only run dry
+     dry-run: # optional, default is true
+     # The name of the app executable
+     app-name: 
+     # Semantic version of the release, see https://semver.org/
+     app-version: # optional, default is ${{ github.ref_name }}
+     # The tag of the release. Could be the same as the version. Only needed for build to upload assets.
+     tag: # optional, default is ${{ github.ref }}
+     # Add options such as "--dart-define" to the flutter build command
+     build-args: # optional, default is 
+     # Build one of the following options: apk, aab, web, ipk, macos, windows, debian
+     build-type: # optional, default is 
+     # At which stage the app should be published: production, beta, alpha, internal
+     publish-stage: # optional, default is 
+     # The distributor on which the app should be published: android-google-play, web-server, ios-app-store, mac-app-store, windows-ms-store, linux-ubuntu, linux-snap
+     publish-distributor: # optional, default is 
+     # The Keystore file as base64 string
+     android-keystore-file-base64: # optional, default is 
+     # The Keystore Password
+     android-keystore-password: # optional, default is 
+     # The key alias of the keystore
+     android-key-alias: # optional, default is 
+     # The password of the key alias of the keystore
+     android-key-password: # optional, default is 
+     # The Google Play Credentials Json file as base64 string
+     publish-android-fastlane-secrets-json-base64: # optional, default is 
+     # The Apple ID / iTunes username
+     ios-apple-username: # optional, default is 
+     # The key id of your App Store Connect API key, see https://appstoreconnect.apple.com/access/integrations/api
+     ios-api-key-id: # optional, default is 
+     # The issuer id of your App Store Connect API key, see https://appstoreconnect.apple.com/access/integrations/api
+     ios-api-issuer-id: # optional, default is 
+     # The private App Store Connect API key as base64 string, see https://appstoreconnect.apple.com/access/integrations/api
+     ios-api-private-key-base64: # optional, default is 
+     # The content provider id, also known as `itc_team_id` in fastlane
+     ios-content-provider-id: # optional, default is 
+     # The team id, also known as `team_id` in fastlane
+    ios-team-id: # optional, default is 
+    # Whether your team is in the Apple Developer Enterprise Program
+    ios-team-enterprise: # optional, default is false
+    # The private key (as base64 string) connected to the Distribution certificate
+    ios-distribution-private-key-base64: # optional, default is 
+    # The certificate (as base64 string) connected to the Provisioning profile used to sign the app
+    ios-distribution-cert-base64: # optional, default is 
+    # The hoster of the web app, e.g. the domain or ip address
+    publish-web-host: # optional, default is 
+    # The Web servers path to your html space of the app
+    publish-web-path: # optional, default is 
+    # The Web server SSH port
+    publish-web-ssh-port: # optional, default is 
+    # The Web server SSH user
+    publish-web-ssh-user: # optional, default is 
+    # The private ssh key (as base64 string) of this GitHub action server
+    publish-web-ssh-private-key-base64: # optional, default is 
+       
+      - name: Setup Haxe
+     uses: krdlab/setup-haxe@master
+     with:
+       haxe-version: 4.3.4
+
+      - name: Install Libraries
+     run: |
+       haxelib install hmm --quiet
+       haxelib run hmm install --quiet
+
+      - name: Compile
+     run: haxelib run lime build ios
+
+      - name: Make Ipa
+     run: |
+       cd export/release/ios/build/*-iphoneos
+       mkdir Payload
+       mv *.app Payload
+       zip -r PsychEngine.ipa Payload
+
+      - name: Upload Artifact
+     if: ${{ success() }}
+     uses: actions/upload-artifact@main
+     with:
+       name: iOSBuild
+       path: export/release/ios/build/Release-iphoneos/*.ipa
+       if-no-files-found: error
