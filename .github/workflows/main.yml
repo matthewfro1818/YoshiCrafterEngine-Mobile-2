@@ -144,13 +144,13 @@ jobs:
   iOS:
     runs-on: macos-13
     steps:
-         - name: Checkout
-           uses: actions/checkout@main
-         - name: Flutter Release Action
-           # You may pin to the exact commit or the version.
-           # uses: Oberhauser-Dev/flutter-release-action@508fbc571960b39d960342ad124751bfccfba2df
-           uses: Oberhauser-Dev/flutter-release-action@v0
-           with:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Flutter Release Action
+       # You may pin to the exact commit or the version.
+       # uses: Oberhauser-Dev/flutter-release-action@508fbc571960b39d960342ad124751bfccfba2df
+        uses: Oberhauser-Dev/flutter-release-action@v0
+        with:
             # Authorized secret GitHub Personal Access Token. Defaults to github.token
             token: # optional, default is ${{ github.token }}
             # Specifies the working directory where the command is run.
