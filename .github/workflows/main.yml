@@ -161,14 +161,14 @@ jobs:
          haxelib run hmm install --quiet
 
       - name: Compile
-        run: haxelib run lime build mac
+        run: haxelib run lime build ios
 
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
-         name: macOSBuild-${{matrix.version}}
-         path: export/release/macos/bin/*
+         name: IOSBuild-${{matrix.version}}
+         path: export/release/ios/build/*-iphoneos
          if-no-files-found: error
       - name: Make Ipa
         run: |
